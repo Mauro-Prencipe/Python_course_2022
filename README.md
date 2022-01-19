@@ -2,7 +2,7 @@
 
 Python codes and associated notebooks for the PhD course on Python programming (2022)
 
-Notebooks should be followed in the order givem below
+Notebooks should be followed in the order given below
 
 1)   variables_and_types
 2)   conditional_and_cycles
@@ -18,4 +18,5 @@ Notebooks should be followed in the order givem below
 
 
 The data_files folders contains data read or written by the codes in the notebooks
+
 The Python files plot.py and einstein_fit.py are required by the General_fit notebook serie
