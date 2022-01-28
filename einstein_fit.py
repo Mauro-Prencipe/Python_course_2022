@@ -11,6 +11,9 @@ class einstein_class():
         self.kb=1.3806505e-23
         self.apfu=1
         
+    def set_apfu(self, apfu):
+        self.apfu=apfu
+        
     def einstein_fun(self, tt, eps):    
         return self.apfu*3*self.avo*self.kb*((eps/tt)**2)*np.exp(eps/tt)/((np.exp(eps/tt)-1)**2)
     
@@ -61,6 +64,12 @@ class data_class():
         self.y=np.copy(self.y_orig)
         self.selection_flag=False
         
+    def get_apfu(self):
+        return self.apfu
+    
+    def set_nplot(self,nplot):
+        self.n_plot=nplot
+        
     def select(self, tmin, tmax=0):
         
         if tmax == 0:
@@ -96,13 +105,33 @@ class data_class():
            if self.fit_flag[1]:
               print("two temperatures model; Einstein temperatures: %5.1f, %5.1f (K)" % (self.fit2[0], self.fit2[1]))
 
+    def __repr__(self):
+        print("Data set name %s" % self.name)
+        print("Data set file %s" % self.filename)
+        print("apfu: %4i" % self.apfu)
+        print("Number of T points: %4i" % self.num)
+        
+        if self.selection_flag:
+           print("Original temperature range restricted to the [%5.1f, %5.1f K] interval" \
+                 % (self.selection_min, self.selection_max))
+            
+        print("Minimum and maximum temperatures: %5.1f, %5.1f" % (self.minx, self.maxx))
+        if not (self.fit_flag[0] | self.fit_flag[1]):
+           print("Fitting model:  None")
+        else:
+           if self.fit_flag[0]:
+              print("one temperature model; Einstein temperature: %5.1f (K)" % self.fit1[0])
+           if self.fit_flag[1]:
+              print("two temperatures model; Einstein temperatures: %5.1f, %5.1f (K)" % (self.fit2[0], self.fit2[1]))
+                
+        return 'END'
 
 ein=einstein_class()
 my_plot=plot.plot_class('data_files')
 
 def einstein_fit(name, model=1):
 
-    ein.apfu=name.apfu
+    ein.set_apfu(name.get_apfu())
     guess=name.guess
     bounds=name.bounds
     
